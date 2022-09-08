@@ -1,0 +1,15 @@
+from django.urls import reverse
+
+reverse (пер. обратный, обращать) - возвращает строку str с URL, который совпал по аргументам передаваемым с функцией.
+
+reverse(viewname, urlconf=None, args=None, kwargs=None, current_app=None)
+
+- viewname может быть именем url (url pattern name) или объектом view;
+- в args ИЛИ kwargs можно передать аргументы, если URL их принимает;
+- current_app указывается при именованных URL приложений (см. namespaced URL resolution strategy https://docs.djangoproject.com/en/4.1/topics/http/urls/#topics-http-reversing-url-namespaces);
+- 
+
+Если reverse() не нашел совпадений - выпадает исключение NoReverseMatch.
+
+reverse() может обрабатывать любые шаблоны регулярных выражений, кроме содержащих вертикальную черту "|".
+
