@@ -1,0 +1,19 @@
+https://docs.djangoproject.com/en/4.1/ref/class-based-views/generic-display/
+
+class django.views.generic.detail.DetailView
+
+Объект, который возвращает DetailView - self.object.
+
+DetailView наследует методы и аттрибуты от:
+- django.views.generic.detail.SingleObjectTemplateResponseMixin
+- django.views.generic.base.TemplateResponseMixin
+- django.views.generic.detail.BaseDetailView
+- django.views.generic.detail.SingleObjectMixin
+- django.views.generic.base.View
+
+class ArticleDetailView(DetailView):
+    model = Article
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
