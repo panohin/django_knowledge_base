@@ -17,3 +17,7 @@ class ArticleDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
         return context
+
+Аттрибут slug_field по определению 'slug'. Если поле SlugField в модели имеет другое имя - необходимо переопределить аттрибут. Напр., slug_field = 'custom_slug_field'.
+
+По определению, DetailView создаёт template_name = 'app_name/modelname_detail.html'
