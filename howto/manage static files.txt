@@ -1,0 +1,31 @@
+https://docs.djangoproject.com/en/4.1/howto/static-files/
+
+1. django.contrib.staticfiles должен быть в INSTALLED_APPS
+2. Определить STATIC_URL в settings.py: STATIC_URL = 'static/'
+3. В шаблонах использовать тег static, чтобы создавать относительную ссылку к статическим файлам:
+{% load static %}
+<img src="{% static 'my_app//example.jpg' %}" alt="My image">
+4. Хранить файлы статики в директории static. Напр.,
+my_app/static/my_app/example.jpg
+
+Если проект использует статику, не привязанную к определенному приложению, необходимо определить список директорий STATICFILES_DIRS, в которых Джанго будет искать файлы статики. Напр.,
+STATICFILES_DIRS = [
+	BASE_DIR / "static",
+	'/var/www/static/',
+]
+
+Обслуживание (?) файлов статики
+Если использовать django.contrib.staticfiles, runserver сделает всё сам, если DEBUG = TRUE. Но если django.contrib.staticfiles не в INSTALLED_APPS, то можно обслуживать файлы статики с помощью django.views.static.server.
+Но это не для продакшена! См.
+https://docs.djangoproject.com/en/4.1/howto/static-files/deployment/
+Например, если STATIC_URL = 'static/', можно сделать так (urls.py):
+
+from django.conf import settings
+from django.contrib.urls.static import static
+
+urlpatterns = [
+	# ... another URLconf
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+Эту функцию можно применять только на DEBUG=True и только если префикс ('static/') локальный, а не URL.
+Также, эта функция
