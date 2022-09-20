@@ -1,1 +1,12 @@
 https://github.com/django-ckeditor/django-ckeditor
+
+Позволяет вставлять RichTextField, RichTextUploadingField, CKEditorWidget and CKEditorUploadingWidget в формы!
+
+Чтобы на сайте отображалось без html-тегов - в шаблоне Джанго переменным даём параметр safe: {{ obj.descriprion|safe }}
+
+Для вставки видео из Youtube необходим плагин:
+https://ckeditor.com/cke4/addon/youtube
+1. Распаковываем в папку static/ckeditor/ckeditor/plugins
+2. Добавляем 'youtube' в список CKEDITOR_CONFIGS('toolbar')
+3. Добавляем 'Youtube' в CKEDITOR_CONFIGS('toolbar_YourCustomToolbarConfig')
+4. Наслаждаемся!
