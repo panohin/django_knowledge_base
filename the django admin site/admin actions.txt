@@ -1,20 +1,20 @@
-https://docs.djangoproject.com/en/4.1/ref/contrib/admin/actions/
+п»їhttps://docs.djangoproject.com/en/4.1/ref/contrib/admin/actions/
 
 
-Admin actions - функции, котьорые можно применять к списку объектов в админ панели.
+Admin actions - С„СѓРЅРєС†РёРё, РєРѕС‚СЊРѕСЂС‹Рµ РјРѕР¶РЅРѕ РїСЂРёРјРµРЅСЏС‚СЊ Рє СЃРїРёСЃРєСѓ РѕР±СЉРµРєС‚РѕРІ РІ Р°РґРјРёРЅ РїР°РЅРµР»Рё.
 
 
-Actions - обычные функции, принимающие три аргумента: текущую ModelAdmin, request, queryset (со списком объектов для экшена:))
+Actions - РѕР±С‹С‡РЅС‹Рµ С„СѓРЅРєС†РёРё, РїСЂРёРЅРёРјР°СЋС‰РёРµ С‚СЂРё Р°СЂРіСѓРјРµРЅС‚Р°: С‚РµРєСѓС‰СѓСЋ ModelAdmin, request, queryset (СЃРѕ СЃРїРёСЃРєРѕРј РѕР±СЉРµРєС‚РѕРІ РґР»СЏ СЌРєС€РµРЅР°:))
 
 def make_published(modeladmin, request, queryset):
     queryset.update(status='p')
 
-или for obj in queryset:
+РёР»Рё for obj in queryset:
     do_something_with(obj),
-если нельзя сделать update (https://docs.djangoproject.com/en/4.1/topics/db/queries/#topics-db-queries-update).
+РµСЃР»Рё РЅРµР»СЊР·СЏ СЃРґРµР»Р°С‚СЊ update (https://docs.djangoproject.com/en/4.1/topics/db/queries/#topics-db-queries-update).
 
 
-Необходимо передать [список] экшенов в аттрибуте actions в нужной ModelAdmin.
+РќРµРѕР±С…РѕРґРёРјРѕ РїРµСЂРµРґР°С‚СЊ [СЃРїРёСЃРѕРє] СЌРєС€РµРЅРѕРІ РІ Р°С‚С‚СЂРёР±СѓС‚Рµ actions РІ РЅСѓР¶РЅРѕР№ ModelAdmin.
 from django.contrib import admin
 from myapp.models import Article
 
@@ -30,8 +30,8 @@ class ArticleAdmin(admin.ModelAdmin):
 admin.site.register(Article, ArticleAdmin)
 
 
-По дефолту, название экшена в админ панели будет "make published".
-Можно изменить так:
+РџРѕ РґРµС„РѕР»С‚Сѓ, РЅР°Р·РІР°РЅРёРµ СЌРєС€РµРЅР° РІ Р°РґРјРёРЅ РїР°РЅРµР»Рё Р±СѓРґРµС‚ "make published".
+РњРѕР¶РЅРѕ РёР·РјРµРЅРёС‚СЊ С‚Р°Рє:
 
 from django.contrib import admin
 ...
