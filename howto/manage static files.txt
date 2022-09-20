@@ -28,4 +28,9 @@ urlpatterns = [
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 Эту функцию можно применять только на DEBUG=True и только если префикс ('static/') локальный, а не URL.
-Также, эта функция обслуживает только статику из STATIC_ROOT, и не выполняет поиск фаулов статики, как django.contrib.staticfiles.
+Также, эта функция обслуживает только статику из STATIC_ROOT, и не выполняет поиск файлов статики, как django.contrib.staticfiles.
+
+
+Развёртывание (deployment)
+
+django.contrib.staticfiles позволяет 
