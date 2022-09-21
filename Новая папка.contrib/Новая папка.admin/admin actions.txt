@@ -18,7 +18,7 @@ def make_published(modeladmin, request, queryset):
 from django.contrib import admin
 from myapp.models import Article
 
-@admin.action(description='Mark selected stories as published')
+@admin.action(description='Mark selected stories as published') # указываемое человекочитаемое имя. По дефолту 'make published'
 def make_published(modeladmin, request, queryset):
     queryset.update(status='p')
 
@@ -30,12 +30,20 @@ class ArticleAdmin(admin.ModelAdmin):
 admin.site.register(Article, ArticleAdmin)
 
 
-По дефолту, название экшена в админ панели будет "make published".
-Можно изменить так:
+Если action плотно привязан к определенной ModelAdmin, то можно добавить action как метод класса ModelAdmin:
 
-from django.contrib import admin
-...
-@admin.action(description='Mark selected stories as published')
-def make_published(modeladmin, request, queryset):
-    queryset.update(status='p')
+class ArticleAdmin(admin.ModelAdmin):
+	...
+    actions = ['make_published']
+	...
+    @admin.action(description='Mark selected stories as published')
+    def make_published(self, request, queryset):
+        queryset.update(status='p')
+Обратим внимание, что в аттрибут actions уже передаётся 'строка' с названием функции, а первый аргумент метода - self.
+Action как метод позволяет составлять более понятное сообщение self.message_user().
+
+
+Actions that provide intermediate pages
+
+
 
