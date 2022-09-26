@@ -1,0 +1,45 @@
+﻿https://docs.djangoproject.com/en/4.1/howto/custom-template-tags/
+
+
+project_name
+	app_name
+		__init__.py
+		views.py
+		models.py
+		...
+		templatetags/
+			__init__.py
+			template_tag_name.py
+
+CUSTOM TAMPLATE TAGS
+В шаблоне указываем:
+{% load template_tag_name %}
+
+
+Модуль templatetag должен содержать переменную register, являющуюся экземпляром template.Library. В модуле указываем:
+
+from django import template
+
+register = template.Library()
+
+CUSTOM TEMPLATE FILTERS
+Кастомный фильтр - функция, принимающая один или два аргумента:
+- значение переменной (не обязательно 'строка')
+- значение аргумента
+Напр., в фильтре {{ var|foo:"bar" }} фильтр foo принимает переменную var и аргумент "bar".
+
+def cut(value, arg):
+    """Removes all values of arg from the given string"""
+    return value.replace(arg, '')
+
+{{ somevariable|cut:"0" }}
+
+Чтобы зарегистрировать фильтр, используем django.template.Library.filter():
+register.filter('cut', cut)
+Метод Library.filter() принимает два аргумента: имя фильтра ('строка'), функция фильтра.
+
+Зарегистрировать фильтр можно и с помощью декоратора:
+@register.filter(name='cut')
+def cut(value, arg):
+    return value.replace(arg, '')
+
