@@ -82,3 +82,16 @@ https://docs.djangoproject.com/en/4.1/ref/forms/api/#binding-uploaded-files
 Работа с формами в шаблонах templates.
 
 Передавая в шаблон template {{ form }}, Джанго отобразит <label> и <input> формы. Тэг <form> и submit нужно указать самому.
+
+
+Переиспользуемые шаблоны форм.(не понял!)
+Суть в том, что можно использовать один шаблон temlplate для разных подобных форм.
+
+
+Возможности отображения форм.
+
+Для отображения <label>,<input>  можно использовать:
+- {{ form.as_div }}
+- {{ form.as_table }}
+- {{ form.as_p }}
+- {{ form.as_ul }}
