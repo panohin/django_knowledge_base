@@ -21,6 +21,64 @@ POST для внесения изменений.
 
 Создание, обработка и отображение форм
 
+Если экземляр модели мы запрашиваем из базы данных, то, имея дело с формами, мы создаём их в представлениях.
+Template:
+В <form action="" method=""> action указываем url, а в method -- 'post' или 'get'.
+
+Пример простой формы в шаблоне:
+<form action="/your-name/" method="post">
+    {% csrf_token %}
+    <label for="your_name">Your name: </label>
+    <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
+    <input type="submit" value="OK">
+</form>
+
+Экземпляр класса forms.Form имеет метод is_valid(), запускающий валидацию для всех полей формы. В случае успешной проверки возвращает True и размещает данные из формы в аттрибут cleaned_data.
+
+Пример объявления forms.Form:
+from django import forms
+
+class NameForm(forms.Form):
+    your_name = forms.CharField(label='Your name', max_length=100)
+Обратить внимание, что данная форма не формирует тэги <form> и кнопку submit.
+
+
+Связанные и несвязанные формы (bound and inbound)
+- несвязанные формы не имеют данных, связанных с ней. При отображении они пустые или со значениями по умолчанию;
+- связанная форма имеет данные и позволяет проверить их (is_valid()). Если данные невалидные - можно активировать встроенные сообщения об ошибках, которые необходимо исправить пользователю.
+- атрибут экземпляра класса Form is.bound позволит узнать привязана форма или нет.
 
 
 
+Виджеты.
+Каждое поле формы имеет соответствующий класс Виджета.
+https://docs.djangoproject.com/en/4.1/ref/forms/widgets/
+
+
+Данные.
+
+После того, как данные отправлены в форму, и is_valid() возвращает True, данные помещаются в словарь form.cleaned_data.
+Можно, конечно, воспользоваться данными из request.POST, но словарь cleaned_data лучше.("потому что потому")
+
+from django.core.mail import send_mail
+
+if form.is_valid():
+    subject = form.cleaned_data['subject']
+    message = form.cleaned_data['message']
+    sender = form.cleaned_data['sender']
+    cc_myself = form.cleaned_data['cc_myself']
+
+    recipients = ['info@example.com']
+    if cc_myself:
+        recipients.append(sender)
+
+    send_mail(subject, message, sender, recipients)
+    return HttpResponseRedirect('/thanks/')
+
+Файлы, загруженные с помощью формы, нужно получать из request.FILES.
+https://docs.djangoproject.com/en/4.1/ref/forms/api/#binding-uploaded-files
+
+
+Работа с формами в шаблонах templates.
+
+Передавая в шаблон template {{ form }}, Джанго отобразит <label> и <input> формы. Тэг <form> и submit нужно указать самому.
