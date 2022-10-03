@@ -92,6 +92,14 @@ https://docs.djangoproject.com/en/4.1/ref/forms/api/#binding-uploaded-files
 
 Для отображения <label>,<input>  можно использовать:
 - {{ form.as_div }}
-- {{ form.as_table }}
+- {{ form.as_table }} <table> указываем сами
 - {{ form.as_p }}
-- {{ form.as_ul }}
+- {{ form.as_ul }} <ul> указываем сами
+
+Как формы подставляются в html:
+https://docs.djangoproject.com/en/4.1/ref/forms/api/#ref-forms-api-outputting-html
+
+Отрисовка полей формы вручную.
+
+
+
