@@ -100,6 +100,59 @@ https://docs.djangoproject.com/en/4.1/ref/forms/api/#binding-uploaded-files
 https://docs.djangoproject.com/en/4.1/ref/forms/api/#ref-forms-api-outputting-html
 
 Отрисовка полей формы вручную.
+К каждому полю формы в шаблоне template можно обратиться по {{ form.name_of_field }}.
+
+{{ form.non_field_errors }}
+<div class="fieldWrapper">
+    {{ form.subject.errors }}
+    <label for="{{ form.subject.id_for_label }}">Email subject:</label>
+    {{ form.subject }}
+</div>
 
 
+Перебор полей формы.
 
+Если для всех полей формы применяем один html код, то можем использовать цикл {% for %}:
+
+{% for field in form %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+    </div>
+{% endfor %}
+
+Полезные атрибуты поля {{ field }}:
+- {{ field.errors }}
+Отдаёт <ul class="errorlist"> содержащий все ошибки, связанные с этим полем. Можно самому настроить вывод ошибок с помощью {% for error in field.errors %}. В этом случае каждый объект перебора будет строкой 'string', содержащей текст ошибки.
+- {{ field.field }}
+Экземпляр Field из класса формы. С помощью него можно получить доступ к атрибутам Field, напр., {{ char_field.field.max_length }}.
+- {{ field.help_text }}
+Любой текст справки
+- {{ field.html_name }}
+Имя поля, которое будет использоваться в поле имени элемента ввода. При этом учитывается префикс формы, если он был установлен
+- {{ field.id_for_label }}
+Идентификатор, который будет использован для этого поля. Если создаём метку вручную, то можно использовать её вместо label_tag. Это также полезно, когда хотим избежать хардкода в поле ID JavaScript.
+- {{ field.is_hidden }}
+Возвращает True, если поле спрятано hidden
+- {{ field.label }}
+- {{ field.label_tag }}
+label поля, указанный в html <label> тэг
+- {{ field.legend_tag }}
+То же, что и label_tag, но для виджетов с несколькими входными данными, заключенными в <fieldset>
+- {{ field.use_fieldset }}
+Возвращает True, если виджет поля формы содержит несколько входных данных, которые должны быть сгруппированы в <fieldset> с <legend>. Напр.,
+{% if field.use_fieldset %}
+  <fieldset>
+  {% if field.label %}{{ field.legend_tag }}{% endif %}
+{% else %}
+  {% if field.label %}{{ field.label_tag }}{% endif %}
+{% endif %}
+{{ field }}
+{% if field.use_fieldset %}</fieldset>{% endif %}
+- {{ field.value }}
+
+Перебор в цикле hidden и visible полей
+Джанго предоставляет возможность перебирать отдельно form.hidden_fields или form.visible_fields.
